@@ -1,0 +1,7 @@
+.formItem {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   width: 550px;
+   margin: 0 auto;
+}
