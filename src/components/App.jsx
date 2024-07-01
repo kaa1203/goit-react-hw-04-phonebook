@@ -4,35 +4,36 @@ import { Section } from "./Section/Section";
 import { Filter } from "./Filter/Filter";
 import { ContactList } from "./ContactList/ContactList";
 
+const initialContacts = () => {
+   const contactFromLocalStorage = localStorage.getItem("contacts");
+   if ( contactFromLocalStorage === null) {
+      return [
+         {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+         {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+         {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+         {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+      ];
+   }
+
+   return JSON.parse(contactFromLocalStorage);
+}
+
 export const App = () => {
-   const [contacts, setContacts] = useState([
-      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-   ]);
+   const [contacts, setContacts] = useState(initialContacts);
    
    const [filter, setFilter] = useState("");
-
-   const fetchContactsFromLS = localStorage.getItem("contacts");
-
-   useEffect(() => {
-      if (fetchContactsFromLS) {
-         setContacts(JSON.parse(fetchContactsFromLS));
-      }
-   }, []);
-
+   
    useEffect(() => {
       localStorage.setItem("contacts", JSON.stringify(contacts));
-   }, [contacts])
+   }, [contacts]);
 
    const addContact = newContact => {
       setContacts(prevState => [...prevState, newContact]);
    }
 
-   const deleteContact = contactId => {
-      
-      setContacts(contacts.filter(contact => contact.id != contactId))
+   const deleteContact = contactId => {  
+      console.log(contactId)
+      setContacts(contacts.filter(contact => contact.id !== contactId))
    }
 
    const filterValue = value => {

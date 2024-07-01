@@ -26,7 +26,16 @@ export const ContactForm = ({ contacts, addContact }) => {
 
    const handleOnSubmit = e => {
       e.preventDefault();
-      const id = `id-${contacts.length + 1}`;
+
+      let d = new Date();
+      let id = d.getTime().toString().split("")
+      id = id.splice(-7).join("");
+
+      const contactExists = contacts.find(contact => contact.name === name);
+      
+      if (contactExists) {
+         return alert(`${name} is already on the contacts!`);
+      }
       
       addContact({
          id,
